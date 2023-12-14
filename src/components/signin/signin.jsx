@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Style } from './../signin/style.tailwind'
 import { InputError, Notification } from './../libs/error';
 import sendHttpReq from '../../helper/httpRequest';
+import circle_icon from '../../../public/circle-notch-solid.svg'
 
 import axios from 'axios';
 
@@ -29,9 +30,10 @@ export default function Signin() {
         setIsLoading(true)
 
         try {
-           const response = await axios.post('http://127.0.0.1:5000/api/signin', {
-            email: parseFormData.email,
-            password: parseFormData.password}) 
+            const response = await axios.post('http://127.0.0.1:5000/api/signin', {
+                email: parseFormData.email,
+                password: parseFormData.password
+            })
 
             setData(response)
             setIsLoading(false)
@@ -42,11 +44,11 @@ export default function Signin() {
         } catch (error) {
             setError(error || 'something went wrong')
         }
-        
 
-        
 
-            // setUserAuth(parseFormData.email)
+
+
+        // setUserAuth(parseFormData.email)
 
         //     // const signinDetails = {
         //     //     email: userEmail,
@@ -128,8 +130,10 @@ export default function Signin() {
                                 type='submit'
                                 className={Style.submit}>
                                 Sign in
-                                
+                                <img src={circle_icon}></img>
+
                             </button>
+                            <i src={circle_icon} width={50} height={50}></i>
                         </div>
                     </form>
                     <div>
