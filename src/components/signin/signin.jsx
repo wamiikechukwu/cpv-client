@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Style } from './../signin/style.tailwind'
-import Error from '../error';
+import {InputError, Notification} from './../libs/error';
 
 export default function Signin() {
 
     const [isEmailValid, setIsEmailValid] = useState(false)
+    const [userAuth, setUserAuth] = useState()
 
     function submit(event) {
         event.preventDefault()
@@ -21,6 +22,7 @@ export default function Signin() {
         setIsEmailValid(false)
 
         console.log(parseFormData)
+        // setUserAuth(parseFormData.email)
 
         //     // const signinDetails = {
         //     //     email: userEmail,
@@ -55,7 +57,7 @@ export default function Signin() {
     }
     return (
         <div className={Style.container}>
-
+            <Notification style={Style.notification} heading={'test'} message={userAuth} />
             <div className={Style.subcontainer}>
                 <div className={Style.headcontainter}>
                     <h2 className={Style.head}> Sign in to your account </h2>
@@ -79,7 +81,7 @@ export default function Signin() {
                                 required
                             />
                         </div>
-                        <Error style={Style.red_text} message={'Invalid email domain used'} condition={isEmailValid} />
+                        <InputError style={Style.red_text} message={'Invalid email domain used'} condition={isEmailValid} />
                         <div className={Style.padding_top}>
                             <label
                                 className={Style.label}
