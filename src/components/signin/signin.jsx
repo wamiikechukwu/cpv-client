@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { Style } from './../signin/style.tailwind'
-import {InputError, Notification} from './../libs/error';
+import { InputError, Notification } from './../libs/error';
+import sendHttpReq from '../../helper/httpRequest';
+
+import axios from 'axios';
+
 
 export default function Signin() {
 
     const [isEmailValid, setIsEmailValid] = useState(false)
-    const [userAuth, setUserAuth] = useState()
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
 
-    function submit(event) {
+    async function submit(event) {
         event.preventDefault()
 
         const formData = new FormData(event.target);
@@ -16,13 +22,31 @@ export default function Signin() {
         if (!parseFormData.email.includes('@hcihealthcare.ng')) {
             setIsEmailValid(true)
             return
-
         }
 
         setIsEmailValid(false)
 
-        console.log(parseFormData)
-        // setUserAuth(parseFormData.email)
+        setIsLoading(true)
+
+        try {
+           const response = await axios.post('http://127.0.0.1:5000/api/signin', {
+            email: parseFormData.email,
+            password: parseFormData.password}) 
+
+            setData(response)
+            setIsLoading(false)
+            console.log(data)
+            console.log("data")
+
+
+        } catch (error) {
+            setError(error || 'something went wrong')
+        }
+        
+
+        
+
+            // setUserAuth(parseFormData.email)
 
         //     // const signinDetails = {
         //     //     email: userEmail,
@@ -57,7 +81,7 @@ export default function Signin() {
     }
     return (
         <div className={Style.container}>
-            <Notification style={Style.notification} heading={'test'} message={userAuth} />
+            <Notification style={Style.notification} heading={'test'} message={error} />
             <div className={Style.subcontainer}>
                 <div className={Style.headcontainter}>
                     <h2 className={Style.head}> Sign in to your account </h2>
@@ -104,6 +128,7 @@ export default function Signin() {
                                 type='submit'
                                 className={Style.submit}>
                                 Sign in
+                                
                             </button>
                         </div>
                     </form>
