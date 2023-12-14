@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Style } from './../signin/style.tailwind'
 import { InputError, Notification } from './../libs/error';
 import sendHttpReq from '../../helper/httpRequest';
-import circle_icon from '../../../public/circle-notch-solid.svg'
+// import circle_icon from '/circle-notch-solid.svg'
+import circle_icon from '/spinner-solid.svg'
 
 import axios from 'axios';
 
@@ -129,8 +130,10 @@ export default function Signin() {
                             <button
                                 type='submit'
                                 className={Style.submit}>
-                                Sign in
-                                <img src={circle_icon}></img>
+                                <span className='flex-auto'>Sign in</span>
+                                
+                                <img src={circle_icon} width={20} height={20} className='self-center animate-spin'></img>
+                                
 
                             </button>
                             <i src={circle_icon} width={50} height={50}></i>
