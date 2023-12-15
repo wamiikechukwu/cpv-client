@@ -2,21 +2,26 @@ import { useState } from 'react';
 import { Style } from './../signin/style.tailwind'
 import { InputError, Notification } from './../libs/error';
 import sendHttpReq from '../../helper/httpRequest';
-// import circle_icon from '/circle-notch-solid.svg'
-import circle_icon from '/spinner-solid.svg'
+import circleIcon from '/spinner-solid.svg'
+import LoadingButton from '../libs/Button';
 
 import axios from 'axios';
 
 
 export default function Signin() {
 
-    const [isEmailValid, setIsEmailValid] = useState(false)
+    const [isEmailValid, setIsEmailValid] = useState(false);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState();
+    const [isError, setIsError] = useState({
+        name:'',
+        message: ''
+    });
 
     async function submit(event) {
         event.preventDefault()
+        
+        setIsLoading(true)
 
         const formData = new FormData(event.target);
         const parseFormData = Object.fromEntries(formData.entries())
@@ -28,8 +33,6 @@ export default function Signin() {
 
         setIsEmailValid(false)
 
-        setIsLoading(true)
-
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/signin', {
                 email: parseFormData.email,
@@ -38,53 +41,22 @@ export default function Signin() {
 
             setData(response)
             setIsLoading(false)
-            console.log(data)
-            console.log("data")
-
 
         } catch (error) {
-            setError(error || 'something went wrong')
+            // setIsError(error.message || 'something went wrong')
+            setIsError({
+                name: error.name,
+                message: error.message
+            })
+            setIsLoading(false)
+            console.log(error)
+
+
         }
-
-
-
-
-        // setUserAuth(parseFormData.email)
-
-        //     // const signinDetails = {
-        //     //     email: userEmail,
-        //     //     password: userPassword
-        //     // }
-
-        //     // axios.post('/signin', {
-        //     //     email: userEmail,
-        //     //     password: userPassword
-        //     // }).then(function (response) {
-        //     //     // handle success
-        //     //     console.log(response);
-        //     //     setStatus({code: response.data.message})
-
-        //     // }).catch(function (error) {
-        //     //     // handle error
-        //     //     setStatus({code: error.response.data.message})
-        //     //     console.log("this is from state", status.code);
-        //     //     console.log(error.response.data.status);
-
-        //     // })
-
-
-
-        //     // const request = await fetch('http://127.0.0.1:5000/api/signin',{
-        //     //     method: "POST",
-        //     //     headers: {'Content-Type': 'application/json'},
-        //     //     body: JSON.stringify(signinDetails)
-        //     // })
-
-
     }
     return (
         <div className={Style.container}>
-            <Notification style={Style.notification} heading={'test'} message={error} />
+            <Notification style={Style.notification} heading={isError.name} message={isError.message} />
             <div className={Style.subcontainer}>
                 <div className={Style.headcontainter}>
                     <h2 className={Style.head}> Sign in to your account </h2>
@@ -127,16 +99,17 @@ export default function Signin() {
                             />
                         </div>
                         <div className={Style.padding_top}>
-                            <button
-                                type='submit'
-                                className={Style.submit}>
-                                <span className='flex-auto'>Sign in</span>
-                                
-                                <img src={circle_icon} width={20} height={20} className='self-center animate-spin'></img>
-                                
-
-                            </button>
-                            <i src={circle_icon} width={50} height={50}></i>
+                        
+                            <LoadingButton
+                                buttonType={'submit'}
+                                buttonClassName={Style.submit}
+                                textClassName={'flex-auto'}
+                                text={'Sign In'} 
+                                iconWidth={20}
+                                iconHeight={20}
+                                iconClassName={'self-center animate-spin'}
+                                isLoading={isLoading}
+                                icon={circleIcon}/>
                         </div>
                     </form>
                     <div>
