@@ -1,78 +1,94 @@
 import { useState } from 'react';
-import { Style } from './../signin/style.tailwind'
-import { InputError, Notification } from './../libs/error';
-import sendHttpReq from '../../helper/httpRequest';
+import { signin } from './styles/style.tailwind'
+import { InputError, Notification } from '../components/libs/error';
+import sendHttpReq from '../helper/httpRequest';
 import circleIcon from '/spinner-solid.svg'
-import LoadingButton from '../libs/Button';
+import LoadingButton from '../components/libs/Button';
+
 
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
-export default function Signin() {
+export function Signin() {
 
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState({
-        name:'',
+        name: '',
         message: ''
     });
 
     async function submit(event) {
         event.preventDefault()
-        
+
         setIsLoading(true)
 
         const formData = new FormData(event.target);
         const parseFormData = Object.fromEntries(formData.entries())
 
-        if (!parseFormData.email.includes('@hcihealthcare.ng')) {
+        if (!parseFormData.email.includes('@gmail.com')) {
             setIsEmailValid(true)
+            setIsLoading(false)
             return
         }
 
         setIsEmailValid(false)
 
         try {
-            const response = await axios.post('http://127.0.0.1:5000/api/signin', {
+            const { data } = await axios.post('http://127.0.0.1:5000/api/signin', {
                 email: parseFormData.email,
                 password: parseFormData.password
             })
 
-            setData(response)
+            setData(data)
+
             setIsLoading(false)
+
+            if (data) {
+                console.log('response', data)
+                console.log('response')
+            }
 
         } catch (error) {
-            // setIsError(error.message || 'something went wrong')
-            setIsError({
-                name: error.name,
-                message: error.message
-            })
+            if (error.response?.data) {
+                setIsError({
+                    name: error.response.data.status,
+                    message: error.response.data.message
+                })
+                console.log('true')
+            } else {
+                setIsError({
+                    name: error.name,
+                    message: error.message
+                })
+                console.log('false')
+
+            }
+
             setIsLoading(false)
-            console.log(error)
-
-
         }
     }
     return (
-        <div className={Style.container}>
-            <Notification style={Style.notification} heading={isError.name} message={isError.message} />
-            <div className={Style.subcontainer}>
-                <div className={Style.headcontainter}>
-                    <h2 className={Style.head}> Sign in to your account </h2>
+        <div className={signin.container}>
+            <Notification style={signin.notification} heading={isError.name} message={isError.message} />
+            <div className={signin.subcontainer}>
+                <div className={signin.headcontainter}>
+                    <h2 className={signin.head}> Sign in to your account </h2>
                 </div>
-                <div className={Style.formcontainer}>
+                <div className={signin.formcontainer}>
                     <form
                         onSubmit={submit}>
                         <div>
                             <label
-                                className={Style.label}
+                                className={signin.label}
                                 htmlFor="email">
                                 Email Address
                             </label>
 
                             <input
-                                className={Style.input}
+                                className={signin.input}
                                 type="text"
                                 id="email"
                                 name="email"
@@ -80,16 +96,16 @@ export default function Signin() {
                                 required
                             />
                         </div>
-                        <InputError style={Style.red_text} message={'Invalid email domain used'} condition={isEmailValid} />
-                        <div className={Style.padding_top}>
+                        <InputError style={signin.red_text} message={'Invalid email domain used'} condition={isEmailValid} />
+                        <div className={signin.padding_top}>
                             <label
-                                className={Style.label}
+                                className={signin.label}
                                 htmlFor="password">
                                 Password
                             </label>
 
                             <input
-                                className={Style.input}
+                                className={signin.input}
                                 type="password"
                                 id="password"
                                 name="password"
@@ -98,23 +114,29 @@ export default function Signin() {
 
                             />
                         </div>
-                        <div className={Style.padding_top}>
-                        
+                        <div className={signin.padding_top}>
+
                             <LoadingButton
                                 buttonType={'submit'}
-                                buttonClassName={Style.submit}
+                                buttonClassName={signin.submit}
                                 textClassName={'flex-auto'}
-                                text={'Sign In'} 
+                                text={'Sign In'}
                                 iconWidth={20}
                                 iconHeight={20}
                                 iconClassName={'self-center animate-spin'}
                                 isLoading={isLoading}
-                                icon={circleIcon}/>
+                                icon={circleIcon} />
                         </div>
                     </form>
                     <div>
-                        <p className={Style.register_text}>Not a member?
-                            {/* No link to signup yet */}
+                        <p
+                            className={signin.register_text}>
+                            Not a member? {' '}
+
+                            <Link
+                                to='/signup'>
+                                sign up
+                            </Link>
                         </p>
                     </div>
                 </div>
