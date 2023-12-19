@@ -1,25 +1,27 @@
 import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Signin } from './pages/signin'
-import { Signup } from './pages/signup'
+import Signup from './pages/signup'
 import Error from './pages/Error'
+import Dashboard from './pages/dashboard'
+
+import axios from 'axios'
+
 
 const router = createBrowserRouter([
-  {
-    path: '/',  
-    element: <Signin />,
-    errorElement: <Error />,
-    children: [
-      { path: '/signin', element: <Signin /> },
-      { path: '/signup', element: <Signup /> }
-    ]
-  }
+  { path: '/signin', element: <Signin/>},
+  { path: '/dashboard', element: <Dashboard /> },
+  { path: '/signup', element: <Signup /> }
+
 
 
 ])
 
 function App() {
-  return <RouterProvider router={router} />
+
+  axios.defaults.baseURL = 'http://127.0.0.1:5000/api'
+
+  return (<RouterProvider router={router} />)
 }
 
 export default App
