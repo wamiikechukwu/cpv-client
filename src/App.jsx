@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Signin } from './pages/signin'
 import Signup from './pages/signup'
+import DashboardLayout from './components/layouts/dashboard_layout'
 import Error from './pages/Error'
 import Dashboard from './pages/dashboard'
 
@@ -9,8 +10,14 @@ import axios from 'axios'
 
 
 const router = createBrowserRouter([
-  { path: '/signin', element: <Signin/>},
-  { path: '/dashboard', element: <Dashboard /> },
+  { path: '/signin', element: <Signin /> },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+    children: [
+      { path: '', element: <Dashboard /> }
+    ]
+  },
   { path: '/signup', element: <Signup /> }
 
 
