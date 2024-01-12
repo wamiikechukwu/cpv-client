@@ -1,4 +1,5 @@
 import {NavLink} from 'react-router-dom'
+import { sideBarStyles } from './styles/styles.tailwind'
 
 /**
  *
@@ -7,7 +8,7 @@ import {NavLink} from 'react-router-dom'
  */
  const SideBar = ({ items }) => {
     return (
-        <nav>
+        <nav className={sideBarStyles.sideBar}>
             {/* Button */}
             <button>
 
