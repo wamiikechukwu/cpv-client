@@ -8,13 +8,13 @@ import { sideBarStyles } from './styles/styles.tailwind'
  */
  const SideBar = ({ items }) => {
     return (
-        <nav className={sideBarStyles.sideBar}>
+        <nav className={sideBarStyles.sidebar}>
             {/* Button */}
             <button>
 
             </button>
             {/* Logo */}
-            <section >
+            <section className={sideBarStyles.section}>
                 {items.map(item => {
 
                     if (item.link) {
