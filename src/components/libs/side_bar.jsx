@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { sideBarStyles } from './styles/styles.tailwind'
 
 /**
@@ -6,7 +6,7 @@ import { sideBarStyles } from './styles/styles.tailwind'
  * @param arrays of items
  * @returns
  */
- const SideBar = ({ items }) => {
+const SideBar = ({ items }) => {
     return (
         <nav className={sideBarStyles.sidebar}>
             {/* Button */}
@@ -22,11 +22,17 @@ import { sideBarStyles } from './styles/styles.tailwind'
                             <NavLink
                                 key={items.label}
                                 to={item.link}
+                                className={sideBarStyles.navlink}
                             >
 
                                 {/* Label */}
+                                {/* {item.label &&
+                                    <span>{item.label}</span>} */}
                                 {item.label &&
-                                    <span>{item.label}</span>}
+                                    <div>
+                                        {/* ADD IMAGE ICON */}
+                                        <span>{item.label}</span>
+                                    </div>}
                             </NavLink>
                         )
                     }

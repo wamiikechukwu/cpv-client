@@ -1,8 +1,13 @@
 const sideBarStyles = {
 
-    sidebar: 'bg-slate-500 h-full inline-block',
-    section: 'inline-block',
-    navline
+    sidebar: 'bg-slate-500 inline-block h-full',
+    section: 'inline-block h-full p-[1rem]',
+    navlink: 'block',
+    navlinkContainer: 'fixed h-full'
 }
 
-export { sideBarStyles }
+const mainContentStyles = {
+    maincontenter: ''
+}
+
+export { sideBarStyles, mainContentStyles}

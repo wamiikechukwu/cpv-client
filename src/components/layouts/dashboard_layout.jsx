@@ -1,10 +1,12 @@
 import SideBar from '../libs/side_bar'
 import { Outlet } from 'react-router-dom'
+import { sideBarStyles } from '../libs/styles/styles.tailwind'
 
 const DashboardLayout = () => {
     return (
         <>
-            <div>
+            <div
+                className={sideBarStyles.navlinkContainer}>
                 <SideBar items={[
                     { label: 'Home', icon: 'home', link: '/home' },
                     { label: 'Deploy GPUs', icon: 'activity', link: '/deploy_gpus' },
