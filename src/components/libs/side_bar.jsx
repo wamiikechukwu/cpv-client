@@ -24,15 +24,12 @@ const SideBar = ({ items }) => {
                                 to={item.link}
                                 className={sideBarStyles.navlink}
                             >
-
-                                {/* Label */}
-                                {/* {item.label &&
-                                    <span>{item.label}</span>} */}
                                 {item.label &&
                                     <div>
-                                        {/* ADD IMAGE ICON */}
+                                        {item.icon}
                                         <span>{item.label}</span>
-                                    </div>}
+                                    </div>
+                                }
                             </NavLink>
                         )
                     }
