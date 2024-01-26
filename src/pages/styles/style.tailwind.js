@@ -28,3 +28,6 @@ export const signUpStyle = {
 
 }
 
+export const dashboardStyle = {
+    container: 'pl-[11.5em] pr-3 pt-3 pb-3'
+}

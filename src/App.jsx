@@ -5,20 +5,43 @@ import Signup from './pages/signup'
 import DashboardLayout from './components/layouts/dashboard_layout'
 import Error from './pages/Error'
 import Dashboard from './pages/dashboard'
+import { FiAirplay } from "react-icons/fi";
+import { FiCommand } from "react-icons/fi";
+import { FiFeather } from "react-icons/fi";
+import { FiCpu } from "react-icons/fi";
+import { FiLoader } from "react-icons/fi";
+import { FiKey } from "react-icons/fi";
 
 import axios from 'axios'
+import { sideBarStyles } from './components/libs/styles/styles.tailwind'
+sideBarStyles
 
+const items = [
+  { label: 'Home', icon: <FiAirplay className={sideBarStyles.navIcon} />, link: '' },
+  { label: 'Create PV', icon: <FiCommand className={sideBarStyles.navIcon} />, link: 'create' },
+  { label: 'Servers', icon: <FiFeather className={sideBarStyles.navIcon} />, link: '/servers' },
+  { label: 'Account', icon: <FiCpu className={sideBarStyles.navIcon} />, link: '/account', },
+  { label: 'Help', icon: <FiLoader className={sideBarStyles.navIcon} />, link: '/help' },
+  { label: 'Sign Out', icon: <FiKey className={sideBarStyles.navIcon} />, link: 'sign-out' }
+]
 
 const router = createBrowserRouter([
-  { path: '/signin', element: <Signin /> },
+  {
+    path: '/signin', element: <Signin />
+  },
+  {
+    path: '/signup', element: <Signup />
+  },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: <DashboardLayout sidebarItems={items} />,
     children: [
-      { path: '', element: <Dashboard /> }
+      { path: '', element: <Dashboard label={'Home'} /> },
+      { path: 'create', element: <Dashboard /> },
+
+
     ]
-  },
-  { path: '/signup', element: <Signup /> }
+  }
 
 
 

@@ -17,7 +17,7 @@ const SideBar = ({ items }) => {
             <section className={sideBarStyles.section}>
                 {items.map(item => {
 
-                    if (item.link) {
+                    if (item.label) {
                         return (
                             <NavLink
                                 key={items.label}
