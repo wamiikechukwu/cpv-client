@@ -1,11 +1,19 @@
+import { useState } from "react"
 import Card from "../components/libs/Card"
 import Header from "../components/libs/header"
 import { dashboardStyle } from "./styles/style.tailwind"
 
 
+
 // cheack if permission is valid for this route
 
 export const CreatePV = ({ label }) => {
+
+    const [newItem, setNewItem] = useState([{ id: 1, code: '', acctName: '', description: '', amount: '', chequeNo: '' }])
+
+    const addItem = () => {
+        setNewItem([...newItem, { id: newItem.id + 1, code: '', acctName: '', description: '', amount: '', chequeNo: '' }])
+    }
     return (
         <>
             <Header title={label} user={{ name: 'wami', email: 'ikechukwu.wami' }} />
@@ -16,8 +24,8 @@ export const CreatePV = ({ label }) => {
                     <div className="rounded-lg  bg-white shadow p-4">
                         <form>
                             {/* Date */}
-                            <div >
-                                <label className="mb-2.5 block text-black dark:text-white">
+                            <div className={dashboardStyle.date_style} >
+                                <label className="mb-2.5 text-2xl block text-black dark:text-white">
                                     Date
                                 </label>
                                 <input
@@ -27,23 +35,63 @@ export const CreatePV = ({ label }) => {
                                 />
                             </div>
 
-                            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-                                <h3 className="font-medium text-black dark:text-white">
+                            {/* Payee Details */}
+                            <div className={'py-4 px-6.5'}>
+                                <h3 className="text-2xl text-black dark:text-white pb-5">
                                     Payee Details
                                 </h3>
+                                {/* First Name */}
+                                <div>
+                                    <label className="mb-2.5 block text-black dark:text-white">
+                                        Full name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your first name"
+                                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                    />
+                                </div>
+                                {/* Address */}
+                                <div>
+                                    <label className="mb-2.5 pt-5 block text-black dark:text-white">
+                                        Address
+                                    </label>
+                                    <textarea
+                                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                        placeholder="Enter an address"
+                                    >
+
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            {/*Payment Details*/}
+                            <div className={'py-4 px-6.5'}>
+                                <h3 className="text-2xl text-black dark:text-white pb-5">
+                                    Payment Details
+                                </h3>
+
+                                <div>
+                                    {newItem.map((input, index) => (
+                                        <div key={input.id} className="mb-4">
+                                            <input
+                                                type="text"
+                                                value={input.value}
+                                                onChange={(e) => handleChange(e, index)}
+                                                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <button type="button" onClick={addItem}>Add New Items</button>
+
                             </div>
 
                             <div className="p-6.5">
                                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                     <div className="w-full xl:w-1/2">
-                                        <label className="mb-2.5 block text-black dark:text-white">
-                                            First name
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter your first name"
-                                            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                        />
+
                                     </div>
 
                                     <div className="w-full xl:w-1/2">
