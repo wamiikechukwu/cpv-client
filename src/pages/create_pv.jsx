@@ -2,6 +2,8 @@ import { useState } from "react"
 import Card from "../components/libs/Card"
 import Header from "../components/libs/header"
 import { dashboardStyle } from "./styles/style.tailwind"
+import { FiPlus } from "react-icons/fi";
+
 
 
 
@@ -84,7 +86,18 @@ export const CreatePV = ({ label }) => {
                                     ))}
                                 </div>
 
-                                <button type="button" onClick={addItem}>Add New Items</button>
+                                {/* Add new button */}
+                                {/* TODO MAKE A COMPONENT */}
+                                <div>
+                                    <button
+                                        className={dashboardStyle.add_new_item_btn}
+                                        type="button"
+                                        onClick={addItem}>
+                                        <FiPlus className="mr-2" />
+                                        Add New Items
+                                    </button>
+                                </div>
+
 
                             </div>
 
