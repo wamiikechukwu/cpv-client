@@ -22,7 +22,7 @@ export const CreatePV = ({ label }) => {
 
             <div className={dashboardStyle.container}>
                 <div className={dashboardStyle.subcontainer}>
-                    {/* <!-- Contact Form --> */}
+                    {/* <!-- Create payment voucher --> */}
                     <div className="rounded-lg  bg-white shadow p-4">
                         <form>
                             {/* Date */}
@@ -74,7 +74,72 @@ export const CreatePV = ({ label }) => {
                                 </h3>
 
                                 <div>
-                                    {newItem.map((input, index) => (
+                                    <div className="flex">
+                                        {/* Code */}
+                                        <div>
+                                            <label
+                                                className="mb-2.5 pt-5 block text-black dark:text-white">
+                                                Code
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="w-[100px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 mr-1"
+                                            />
+                                        </div>
+
+                                        {/* account name */}
+                                        <div>
+                                            <label
+                                                className="mb-2.5 pt-5 block text-black dark:text-white">
+                                                Account Name
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 ml-1 mr-1"
+                                            />
+                                        </div>
+
+                                        {/* description */}
+                                        <div className="flex-1 mr-3">
+                                            <label
+                                                className="mb-2.5 pt-5 block text-black dark:text-white">
+                                                    Description
+                                            </label>
+                                            <textarea
+                                                type="text"
+                                                className="w-full rounded border-[1.5px] border-stroke font-medium px-2 ml-1"
+                                            ></textarea>
+                                        </div>
+
+                                        {/* Amount */}
+                                        <div>
+                                            <label
+                                                className="mb-2.5 pt-5 block text-black dark:text-white">
+                                                Amount
+                                            </label>
+                                            <input
+                                                type="number"
+                                                placeholder="Enter amount"
+                                                min="0"
+                                                className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 mr-1"
+                                            />
+                                        </div>
+
+                                        {/* Cheque No. */}
+                                        <div>
+                                            <label
+                                                className="mb-2.5 pt-5 block text-black dark:text-white">
+                                                cheque No.
+                                            </label>
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 ml-1"
+                                            />
+                                        </div>
+
+                                    </div>
+                                    {/* {newItem.map((input, index) => (
                                         <div key={input.id} className="mb-4">
                                             <input
                                                 type="text"
@@ -83,7 +148,7 @@ export const CreatePV = ({ label }) => {
                                                 className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                             />
                                         </div>
-                                    ))}
+                                    ))} */}
                                 </div>
 
                                 {/* Add new button */}
