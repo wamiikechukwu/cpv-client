@@ -3,7 +3,7 @@ import { signin } from './styles/style.tailwind'
 import { InputError, Notification } from '../components/libs/error';
 import sendHttpReq from '../helper/httpRequest';
 import circleIcon from '../assets/spinner-solid.svg'
-import LoadingButton from '../components/libs/Button';
+import {LoadingButton} from '../components/libs/Button';
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ export function Signin() {
 
     useEffect(() => {
         if (getItem()?.userValid) {
-            navigate('/dashboard')    
+            navigate('/dashboard')
         }
 
     }, [])

@@ -1,8 +1,8 @@
-export default function LoadingButton({
+function LoadingButton({
     buttonType,
     buttonClassName,
     textClassName,
-    text, 
+    text,
     onclick,
     iconWidth,
     iconHeight,
@@ -11,7 +11,7 @@ export default function LoadingButton({
     icon
 }) {
 
-    const newBtnClass = isLoading? `${buttonClassName} opacity-30` : buttonClassName
+    const newBtnClass = isLoading ? `${buttonClassName} opacity-30` : buttonClassName
     return (
         <>
             <button
@@ -19,12 +19,26 @@ export default function LoadingButton({
                 className={newBtnClass}
                 onClick={onclick}
                 disabled={isLoading}
-                >
+            >
                 <span className={textClassName}>{text}</span>
                 {isLoading && <img src={icon} alt="icon" width={iconWidth} height={iconHeight} className={iconClassName} />}
-
 
             </button>
         </>
     )
 }
+
+function IconButton({ buttonType, buttonClassName, text, }) {
+    return (
+        <>
+            <button
+                type={buttonType}
+                className={` flex items-center bg-slate-500 hover:bg-slate-700 rounded text-white py-2 px-2 ${buttonClassName}`}>
+
+                {text}
+            </button>
+        </>
+    )
+}
+
+export { LoadingButton, IconButton }

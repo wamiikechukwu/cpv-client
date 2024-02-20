@@ -1,7 +1,7 @@
 import { InputError } from '../components/libs/error'
 import { signUpStyle } from './styles/style.tailwind'
 import { Notification } from '../components/libs/error';
-import LoadingButton from '../components/libs/Button';
+import {LoadingButton} from '../components/libs/Button';
 import circleIcon from '../assets/spinner-solid.svg'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';

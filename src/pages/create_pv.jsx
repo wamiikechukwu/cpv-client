@@ -3,6 +3,7 @@ import Card from "../components/libs/Card"
 import Header from "../components/libs/header"
 import { dashboardStyle } from "./styles/style.tailwind"
 import { FiPlus } from "react-icons/fi";
+import { LoadingButton, IconButton } from "../components/libs/Button";
 
 
 
@@ -16,6 +17,20 @@ export const CreatePV = ({ label }) => {
     const addItem = () => {
         setNewItem([...newItem, { id: newItem.id + 1, code: '', acctName: '', description: '', amount: '', chequeNo: '' }])
     }
+
+    const createPv = (event) => {
+        event.preventDefault()
+
+        const formData = new FormData(event.target);
+        const parseFormData = Object.fromEntries(formData.entries())
+
+        // TODO validate code input to accept only digits
+        // TODO check for empty inputs
+        // button to remove items
+
+        console.log(parseFormData)
+        console.log(formData)
+    }
     return (
         <>
             <Header title={label} user={{ name: 'wami', email: 'ikechukwu.wami' }} />
@@ -24,7 +39,8 @@ export const CreatePV = ({ label }) => {
                 <div className={dashboardStyle.subcontainer}>
                     {/* <!-- Create payment voucher --> */}
                     <div className="rounded-lg  bg-white shadow p-4">
-                        <form>
+                        <form
+                            onSubmit={createPv}>
                             {/* Date */}
                             <div className={dashboardStyle.date_style} >
                                 <label className="mb-2.5 text-2xl block text-black dark:text-white">
@@ -55,7 +71,7 @@ export const CreatePV = ({ label }) => {
                                 </div>
                                 {/* Address */}
                                 <div>
-                                    <label className="mb-2.5 pt-5 block text-black dark:text-white">
+                                    <label className="mb-2.5 pt-5 block text-black ">
                                         Address
                                     </label>
                                     <textarea
@@ -69,192 +85,125 @@ export const CreatePV = ({ label }) => {
 
                             {/*Payment Details*/}
                             <div className={'py-4 px-6.5'}>
-                                <h3 className="text-2xl text-black dark:text-white pb-5">
+                                <h3
+                                    className="text-2xl text-black pb-5">
                                     Payment Details
                                 </h3>
 
                                 <div>
-                                    <div className="flex">
-                                        {/* Code */}
-                                        <div>
-                                            <label
-                                                className="mb-2.5 pt-5 block text-black dark:text-white">
-                                                Code
-                                            </label>
-                                            <input
-                                                type="number"
-                                                className="w-[100px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 mr-1"
-                                            />
-                                        </div>
+                                    {newItem.map((input, index) => (
+                                        <div className="flex">
+                                            {/* Code */}
+                                            <div>
+                                                <label
+                                                    className="mb-2.5 pt-5 block text-black"
+                                                    htmlFor={`code-${index}`}>
+                                                    Code
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    id={`code-${index}`}
+                                                    name={`code-${index}`}
+                                                    min={0}
+                                                    className="w-[100px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 mr-1"
+                                                />
+                                            </div>
 
-                                        {/* account name */}
-                                        <div>
-                                            <label
-                                                className="mb-2.5 pt-5 block text-black dark:text-white">
-                                                Account Name
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 ml-1 mr-1"
-                                            />
-                                        </div>
+                                            {/* account name */}
+                                            <div>
+                                                <label
+                                                    className="mb-2.5 pt-5 block text-black"
+                                                    htmlFor={`acctName-${index}`}>
+                                                    Account Name
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id={`acctName-${index}`}
+                                                    name={`acctName-${index}`}
+                                                    className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 ml-1 mr-1"
+                                                />
+                                            </div>
 
-                                        {/* description */}
-                                        <div className="flex-1 mr-3">
-                                            <label
-                                                className="mb-2.5 pt-5 block text-black dark:text-white">
+                                            {/* description */}
+                                            <div className="flex-1 mr-3">
+                                                <label
+                                                    className="mb-2.5 pt-5 block text-black"
+                                                    htmlFor={`descrip-${index}`}>
                                                     Description
-                                            </label>
-                                            <textarea
-                                                type="text"
-                                                className="w-full rounded border-[1.5px] border-stroke font-medium px-2 ml-1"
-                                            ></textarea>
-                                        </div>
+                                                </label>
+                                                <textarea
+                                                    type="text"
+                                                    id={`descrip-${index}`}
+                                                    name={`descrip-${index}`}
+                                                    className="w-full rounded border-[1.5px] border-stroke font-medium px-2 ml-1">
+                                                </textarea>
+                                            </div>
 
-                                        {/* Amount */}
-                                        <div>
-                                            <label
-                                                className="mb-2.5 pt-5 block text-black dark:text-white">
-                                                Amount
-                                            </label>
-                                            <input
-                                                type="number"
-                                                placeholder="Enter amount"
-                                                min="0"
-                                                className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 mr-1"
-                                            />
-                                        </div>
+                                            {/* Amount */}
+                                            <div>
+                                                <label
+                                                    className="mb-2.5 pt-5 block text-black"
+                                                    htmlFor={`amt-${index}`}>
 
-                                        {/* Cheque No. */}
-                                        <div>
-                                            <label
-                                                className="mb-2.5 pt-5 block text-black dark:text-white">
-                                                cheque No.
-                                            </label>
-                                            <input
-                                                type="number"
-                                                min="0"
-                                                className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 ml-1"
-                                            />
-                                        </div>
+                                                    Amount
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    id={`amt-${index}`}
+                                                    name={`amt-${index}`}
+                                                    className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 mr-1"
+                                                />
+                                            </div>
 
-                                    </div>
-                                    {/* {newItem.map((input, index) => (
-                                        <div key={input.id} className="mb-4">
-                                            <input
-                                                type="text"
-                                                value={input.value}
-                                                onChange={(e) => handleChange(e, index)}
-                                                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                            />
+                                            {/* Cheque No. */}
+                                            <div>
+                                                <label
+                                                    className="mb-2.5 pt-5 block text-black"
+                                                    htmlFor={`cheqNo-${index}`}>
+                                                    cheque No.
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    id={`cheqNo-${index}`}
+                                                    name={`cheqNo-${index}`}
+                                                    className="w-[150px] rounded border-[1.5px] border-stroke font-medium py-3 px-2 ml-1"
+                                                />
+                                            </div>
+
                                         </div>
-                                    ))} */}
+                                    ))}
                                 </div>
 
                                 {/* Add new button */}
                                 {/* TODO MAKE A COMPONENT */}
                                 <div>
-                                    <button
+                                    <IconButton
+                                        buttonType={'button'}
+                                        text={'Add New Items'}
+                                    />
+                                    {/* <button
                                         className={dashboardStyle.add_new_item_btn}
                                         type="button"
                                         onClick={addItem}>
                                         <FiPlus className="mr-2" />
-                                        Add New Items
-                                    </button>
+
+                                    </button> */}
                                 </div>
 
 
                             </div>
 
-                            <div className="p-6.5">
-                                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                                    <div className="w-full xl:w-1/2">
 
-                                    </div>
 
-                                    <div className="w-full xl:w-1/2">
-                                        <label className="mb-2.5 block text-black dark:text-white">
-                                            Date
-                                        </label>
-                                        <input
-                                            type="date"
-                                            placeholder="Enter your last name"
-                                            required
-                                            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                        />
-                                    </div>
-                                </div>
+                            <div>
 
-                                <div className="mb-4.5">
-                                    <label className="mb-2.5 block text-black dark:text-white">
-                                        Email <span className="text-meta-1">*</span>
-                                    </label>
-                                    <input
-                                        type="email"
-                                        placeholder="Enter your email address"
-                                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                    />
-                                </div>
-
-                                <div className="mb-4.5">
-                                    <label className="mb-2.5 block text-black dark:text-white">
-                                        Subject
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="Select subject"
-                                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                    />
-                                </div>
-
-                                <div className="mb-4.5">
-                                    <label className="mb-2.5 block text-black dark:text-white">
-                                        Subject
-                                    </label>
-                                    <div className="relative z-20 bg-transparent dark:bg-form-input">
-                                        <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                                            <option value="">Type your subject</option>
-                                            <option value="">USA</option>
-                                            <option value="">UK</option>
-                                            <option value="">Canada</option>
-                                        </select>
-                                        <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
-                                            <svg
-                                                className="fill-current"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <g opacity="0.8">
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        clipRule="evenodd"
-                                                        d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                                                        fill=""
-                                                    ></path>
-                                                </g>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className="mb-6">
-                                    <label className="mb-2.5 block text-black dark:text-white">
-                                        Message
-                                    </label>
-                                    <textarea
-                                        rows={6}
-                                        placeholder="Type your message"
-                                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                    ></textarea>
-                                </div>
-
-                                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
-                                    Send Message
-                                </button>
                             </div>
+                            <LoadingButton
+                                buttonType={'submit'}
+                                text={'create payment PV'}
+                            />
                         </form>
                     </div>
                 </div>
